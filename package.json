@@ -19,7 +19,8 @@
     "test:unit:watch": "karma start config/karma.conf.js --auto-watch",
     "prepare": "npm run build",
     "release": "standard-version",
-    "webdriver": "webdriver-manager update"
+    "webdriver": "webdriver-manager update",
+	  "postinstall": "npm install"
   },
   "keywords": [
     "input",
