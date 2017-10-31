@@ -16,7 +16,7 @@ module.exports = angular.module('ui.utils.masks', [
 	require('./us/us-masks')
 ]).name;
 
-},{"./br/br-masks":3,"./ch/ch-masks":12,"./fr/fr-masks":14,"./global/global-masks":18,"./us/us-masks":29}],2:[function(require,module,exports){
+},{"./br/br-masks":3,"./ch/ch-masks":12,"./fr/fr-masks":14,"./global/global-masks":19,"./us/us-masks":30}],2:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -42,7 +42,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],3:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],3:[function(require,module,exports){
 'use strict';
 
 var m = angular.module('ui.utils.masks.br', [])
@@ -80,7 +80,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],5:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],5:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -102,7 +102,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],6:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],6:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -126,7 +126,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"br-validations":undefined,"string-mask":undefined}],7:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"br-validations":undefined,"string-mask":undefined}],7:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -161,7 +161,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"br-validations":undefined,"string-mask":undefined}],8:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"br-validations":undefined,"string-mask":undefined}],8:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -185,7 +185,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"br-validations":undefined,"string-mask":undefined}],9:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"br-validations":undefined,"string-mask":undefined}],9:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -343,7 +343,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],11:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],11:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -412,7 +412,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],12:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],12:[function(require,module,exports){
 'use strict';
 
 var m = angular.module('ui.utils.masks.ch', [])
@@ -448,7 +448,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],14:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],14:[function(require,module,exports){
 'use strict';
 
 var m = angular.module('ui.utils.masks.fr', [])
@@ -483,7 +483,36 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],16:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],16:[function(require,module,exports){
+'use strict';
+
+var StringMask = require('string-mask');
+var maskFactory = require('../../helpers/mask-factory');
+
+var ccSize = 16;
+
+var ccMask = new StringMask('000-00000-00-0000-00000-0000');
+
+module.exports = maskFactory({
+	clearValue: function(rawValue) {
+		return rawValue.toString().replace(/[^0-9]/g, '').slice(0, ccSize);
+	},
+	format: function(cleanValue) {
+		var formatedValue;
+
+		formatedValue = ccMask.apply(cleanValue) || '';
+
+		return formatedValue.trim().replace(/[^0-9]$/, '');
+	},
+	validations: {
+		creditCard: function(value) {
+			var valueLength = value && value.toString().length;
+			return valueLength === ccSize;
+		}
+	}
+});
+
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],17:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -512,7 +541,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],17:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],18:[function(require,module,exports){
 'use strict';
 
 var moment = require('moment');
@@ -590,10 +619,11 @@ DateMaskDirective.$inject = ['$locale'];
 
 module.exports = DateMaskDirective;
 
-},{"moment":undefined,"string-mask":undefined}],18:[function(require,module,exports){
+},{"moment":undefined,"string-mask":undefined}],19:[function(require,module,exports){
 'use strict';
 
 var m = angular.module('ui.utils.masks.global', [])
+	.directive('uiAccountMask', require('./account/account'))
 	.directive('uiCreditCardMask', require('./credit-card/credit-card'))
 	.directive('uiDateMask', require('./date/date'))
 	.directive('uiMoneyMask', require('./money/money'))
@@ -604,7 +634,7 @@ var m = angular.module('ui.utils.masks.global', [])
 
 module.exports = m.name;
 
-},{"./credit-card/credit-card":16,"./date/date":17,"./money/money":19,"./number/number":20,"./percentage/percentage":21,"./scientific-notation/scientific-notation":22,"./time/time":23}],19:[function(require,module,exports){
+},{"./account/account":16,"./credit-card/credit-card":17,"./date/date":18,"./money/money":20,"./number/number":21,"./percentage/percentage":22,"./scientific-notation/scientific-notation":23,"./time/time":24}],20:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -772,7 +802,7 @@ MoneyMaskDirective.$inject = ['$locale', '$parse'];
 
 module.exports = MoneyMaskDirective;
 
-},{"../../helpers/pre-formatters":26,"../../helpers/validators":27,"string-mask":undefined}],20:[function(require,module,exports){
+},{"../../helpers/pre-formatters":27,"../../helpers/validators":28,"string-mask":undefined}],21:[function(require,module,exports){
 'use strict';
 
 var validators = require('../../helpers/validators');
@@ -892,7 +922,7 @@ NumberMaskDirective.$inject = ['$locale', '$parse'];
 
 module.exports = NumberMaskDirective;
 
-},{"../../helpers/number-mask-builder":25,"../../helpers/pre-formatters":26,"../../helpers/validators":27}],21:[function(require,module,exports){
+},{"../../helpers/number-mask-builder":26,"../../helpers/pre-formatters":27,"../../helpers/validators":28}],22:[function(require,module,exports){
 'use strict';
 
 var validators = require('../../helpers/validators');
@@ -1048,7 +1078,7 @@ PercentageMaskDirective.$inject = ['$locale'];
 
 module.exports = PercentageMaskDirective;
 
-},{"../../helpers/number-mask-builder":25,"../../helpers/pre-formatters":26,"../../helpers/validators":27}],22:[function(require,module,exports){
+},{"../../helpers/number-mask-builder":26,"../../helpers/pre-formatters":27,"../../helpers/validators":28}],23:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -1185,7 +1215,7 @@ ScientificNotationMaskDirective.$inject = ['$locale', '$parse'];
 
 module.exports = ScientificNotationMaskDirective;
 
-},{"string-mask":undefined}],23:[function(require,module,exports){
+},{"string-mask":undefined}],24:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -1252,7 +1282,7 @@ module.exports = function TimeMaskDirective() {
 	};
 };
 
-},{"string-mask":undefined}],24:[function(require,module,exports){
+},{"string-mask":undefined}],25:[function(require,module,exports){
 'use strict';
 
 module.exports = function maskFactory(maskDefinition) {
@@ -1301,7 +1331,7 @@ module.exports = function maskFactory(maskDefinition) {
 	};
 };
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -1341,7 +1371,7 @@ module.exports = {
 	modelMask: modelMask
 };
 
-},{"string-mask":undefined}],26:[function(require,module,exports){
+},{"string-mask":undefined}],27:[function(require,module,exports){
 'use strict';
 
 function clearDelimitersAndLeadingZeros(value) {
@@ -1362,7 +1392,7 @@ module.exports = {
 	prepareNumberToFormatter: prepareNumberToFormatter
 };
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -1376,7 +1406,7 @@ module.exports = {
 	}
 };
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict';
 
 var StringMask = require('string-mask');
@@ -1407,7 +1437,7 @@ module.exports = maskFactory({
 	}
 });
 
-},{"../../helpers/mask-factory":24,"string-mask":undefined}],29:[function(require,module,exports){
+},{"../../helpers/mask-factory":25,"string-mask":undefined}],30:[function(require,module,exports){
 'use strict';
 
 var m = angular.module('ui.utils.masks.us', [])
@@ -1415,4 +1445,4 @@ var m = angular.module('ui.utils.masks.us', [])
 
 module.exports = m.name;
 
-},{"./phone/us-phone":28}]},{},[1]);
+},{"./phone/us-phone":29}]},{},[1]);
