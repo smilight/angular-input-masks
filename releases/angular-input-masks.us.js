@@ -19,7 +19,7 @@ module.exports = angular.module('ui.utils.masks', [
 var StringMask = require('string-mask');
 var maskFactory = require('../../helpers/mask-factory');
 
-var ccSize = 16;
+var ccSize = 23;
 
 var ccMask = new StringMask('000-00000-00-0000-00000-0000');
 
