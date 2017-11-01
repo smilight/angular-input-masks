@@ -57,18 +57,23 @@ var maskFactory = require('../../helpers/mask-factory');
 
 var ccSize = 23;
 
-var ccMask = new StringMask('000-00000-00-0000-00000-0000');
+var ccMask = new StringMask('AAA-AAAAA-AA-AAAA-AAAAA-AAAA');
 
 module.exports = maskFactory({
 	clearValue: function(rawValue) {
-		return rawValue.toString().replace(/[^0-9]/g, '').slice(0, ccSize);
+		console.log(rawValue)
+		console.log(rawValue.toString())
+		console.log(rawValue.toString().replace(/[^a-zA-Z0-9]/g,''))
+		console.log(rawValue.toString().replace(/[^a-zA-Z0-9]/g,'').slice(0,ccSize));
+
+		return rawValue.toString().replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, ccSize);
 	},
 	format: function(cleanValue) {
 		var formatedValue;
 
 		formatedValue = ccMask.apply(cleanValue) || '';
 
-		return formatedValue.trim().replace(/[^A-Za-z0-9]$/, '');
+		return formatedValue.trim().replace(/[^a-zA-Z0-9]$/, '').toUpperCase();
 	},
 	validations: {
 		account: function(value) {
