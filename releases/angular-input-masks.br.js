@@ -421,11 +421,6 @@ var ccMask = new StringMask('AAA-AAAAA-AA-AAAA-AAAAA-AAAA');
 
 module.exports = maskFactory({
 	clearValue: function(rawValue) {
-		console.log(rawValue)
-		console.log(rawValue.toString())
-		console.log(rawValue.toString().replace(/[^a-zA-Z0-9]/g,''))
-		console.log(rawValue.toString().replace(/[^a-zA-Z0-9]/g,'').slice(0,ccSize));
-
 		return rawValue.toString().replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, ccSize);
 	},
 	format: function(cleanValue) {
