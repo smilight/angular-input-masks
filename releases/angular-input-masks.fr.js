@@ -67,10 +67,10 @@ module.exports = maskFactory({
 
 		formatedValue = ccMask.apply(cleanValue) || '';
 
-		return formatedValue.trim().replace(/[^0-9]$/, '');
+		return formatedValue.trim().replace(/[^A-Za-z0-9]$/, '');
 	},
 	validations: {
-		creditCard: function(value) {
+		account: function(value) {
 			var valueLength = value && value.toString().length;
 			return valueLength === ccSize;
 		}
